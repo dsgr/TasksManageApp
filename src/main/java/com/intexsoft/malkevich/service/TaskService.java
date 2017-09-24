@@ -17,9 +17,12 @@ public interface TaskService {
 	@Transactional
 	Task save(Task task);
 	@Transactional
-	Task registration(Task user);
+	Task add(Task task);
 	@Transactional
 	void deleteAll();
 	@Transactional
-	Task update(Task user);
+	void deleteById(Long taskId);
+	@Transactional
+	Task update(Task task);
+
 }

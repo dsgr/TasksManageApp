@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUserName(String username) {
-		return userRepository.findByUserName(username);
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
 	}
 
 	@Override
@@ -45,6 +45,25 @@ public class UserServiceImpl implements UserService {
 		user.authorities = authorities;
 		return userRepository.saveAndFlush(user);
 	}
+
+	@Override
+	public User setMananager(Long userId) {
+        User user = userRepository.findById(userId);
+        user.authorities.add(authorityService.findByAuthority("ROLE_MANAGER"));
+	    return userRepository.saveAndFlush(user);
+	}
+
+    @Override
+    public User setAdmin(Long userId) {
+        User user = userRepository.findById(userId);
+        user.authorities.add(authorityService.findByAuthority("ROLE_ADMIN"));
+        return userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    public void deleteById(Long userId) {
+        userRepository.delete(userId);
+    }
 
 	@Override
 	public void deleteAll() {

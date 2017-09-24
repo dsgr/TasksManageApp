@@ -12,14 +12,20 @@ public interface UserService {
 
 	List<User> findAll();
 
-	User findByUserName(String username);
+	User findByUsername(String username);
 
 	@Transactional
 	User save(User user);
 	@Transactional
 	User registration(User user);
 	@Transactional
+	User setMananager(Long userId);
+	@Transactional
+	User setAdmin(Long userId);
+	@Transactional
 	void deleteAll();
+	@Transactional
+	void deleteById(Long userId);
 	@Transactional
 	User update(User user);
 }

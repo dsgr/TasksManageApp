@@ -13,7 +13,7 @@ public class User extends AbstractEntity {
 	private static final long serialVersionUID = 7232927597102396226L;
 
 	@Column(name = "username")
-	public String userName;
+	public String username;
 	@Column
 	public String password;
 	@Column(name = "first_name")
@@ -29,4 +29,16 @@ public class User extends AbstractEntity {
 			@JoinColumn(name = "authority_id") })
 	public List<Authority> authorities;
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", phoneNumber='" + phoneNumber + '\'' +
+				", mail='" + mail + '\'' +
+				", authorities=" + authorities +
+				'}';
+	}
 }

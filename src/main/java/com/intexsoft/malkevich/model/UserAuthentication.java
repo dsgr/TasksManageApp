@@ -36,7 +36,7 @@ public class UserAuthentication implements Authentication {
 
 	@Override
 	public Object getPrincipal() {
-		return user.userName;
+		return user.username;
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class UserAuthentication implements Authentication {
 
 	@Override
 	public String getName() {
-		return user.userName;
+		return user.username;
 	}
 
 	public User getUser() {

@@ -40,9 +40,9 @@ public class TokenAuthenticationServiceImpl implements TokenAuthenticationServic
 
 	private User getUserFromToken(Jws<Claims> tokenData) {
 		try {
-			return userService.findByUsername(tokenData.getBody().get("userName").toString());
+			return userService.findByUsername(tokenData.getBody().get("username").toString());
 		} catch (UsernameNotFoundException e) {
-			throw new UserNotFoundException("User:" + tokenData.getBody().get("userName").toString() + " not found");
+			throw new UserNotFoundException("User:" + tokenData.getBody().get("username").toString() + " not found");
 		}
 	}
 

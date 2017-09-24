@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/test/test-security-a").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
+                .antMatchers(HttpMethod.GET, "/api/user/all").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
 				.antMatchers(HttpMethod.POST, "/api/customer4/all").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
                 .antMatchers(HttpMethod.PUT, "/puttest").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER")
 				.and().addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),

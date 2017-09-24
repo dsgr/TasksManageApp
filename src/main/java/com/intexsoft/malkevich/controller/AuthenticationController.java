@@ -34,17 +34,18 @@ public class AuthenticationController {
 	}
 
 	/**
-	 * Login method Find {@link com.intexsoft.malkevich.model.User} in database by userName
+	 * Login method Find {@link com.intexsoft.malkevich.model.User} in database by username
 	 * Generate token from {@link TokenService}
 	 *
 	 * @return {@link TokenDTO} model
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> authenticate(@RequestBody User requestUser) {
-		LOGGER.info("Start authentication user with userName: " + requestUser.userName);
 
-		if (isNotEmpty(requestUser.userName) && isNotEmpty(requestUser.password)) {
-			User user = userService.findByUsername(requestUser.userName);
+		LOGGER.info("Start authentication user: " + requestUser.toString());
+
+		if (isNotEmpty(requestUser.username) && isNotEmpty(requestUser.password)) {
+			User user = userService.findByUsername(requestUser.username);
 			String token = tokenService.generate(user, requestUser.password);
 			if (token != null) {
 				LOGGER.info("Authentication successful! Returning token" + token);
