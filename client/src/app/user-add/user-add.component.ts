@@ -45,7 +45,7 @@ export class UserAddComponent extends Access implements OnInit {
     this.userService.add(newUser)
       .subscribe(
         result => {
-          result && this.router.navigate(['/']);
+          result && this.router.navigate(['/user-manage']);
         },
         error => {
           this.error = <any>error;

@@ -24,8 +24,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task findByUserId(Long userId) {
-        return null;
+    public List<Task> findByUserId(Long userId) {
+        return taskRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -37,8 +37,7 @@ public class TaskServiceImpl implements TaskService {
     public Task add(Task task) {
         LOGGER.debug("add task" + task.toString());
         task.taskStatusId = (task.userId == null) ? 1L : 2L;
-        taskRepository.saveAndFlush(task);
-        return null;
+        return taskRepository.saveAndFlush(task);
     }
 
     @Override
@@ -51,6 +50,21 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Override
+    public Task changeUser(Long taskId, Long userId) {
+        Task task = taskRepository.findById(taskId);
+        task.userId=userId;
+        taskRepository.saveAndFlush(task);
+        return task;
+    }
+
+    @Override
+    public Task changeStatus(Long taskId, Long statusId) {
+        Task task = taskRepository.findById(taskId);
+        task.taskStatusId=statusId;
+        taskRepository.saveAndFlush(task);
+        return task;
+    }
 
     @Override
     public Task update(Task task) {

@@ -1,5 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'com.bmuschko.tomcat'
+apply plugin: "jacoco"
 
 def tomcatVersion = '7.0.76'
 
@@ -23,7 +24,11 @@ war {
 tomcat {
     httpPort = 8090
 }
-dependencies {	compile 'org.springframework:spring-orm:4.3.10.RELEASE'
+dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:2.+"
+    testCompile 'org.springframework:spring-test:4.3.10.RELEASE'
+    compile 'org.springframework:spring-orm:4.3.10.RELEASE'
 	compile 'org.springframework:spring-webmvc:4.3.10.RELEASE'
 	compile 'org.springframework.data:spring-data-jpa:1.11.4.RELEASE'
 	compile 'org.hibernate:hibernate-entitymanager:5.2.10.Final'

@@ -4,7 +4,7 @@ import {User} from "../model/user";
 import {Router} from "@angular/router";
 import {Access} from "../constants/access";
 import {UserService} from "../service/user.service";
-
+import {AuthorizationGuard} from "../guard/authorization.guard";
 
 @Component({
   selector: 'user-manage-component',
@@ -30,7 +30,7 @@ export class UserManageComponent extends Access implements OnInit {
     this.userService.setManager(userId)
       .subscribe(
         result => {
-
+          this.updateUsersArr();
           this.loading = false;
         },
         error => {
@@ -46,6 +46,7 @@ export class UserManageComponent extends Access implements OnInit {
     this.userService.setAdmin(userId)
       .subscribe(
         result => {
+          this.updateUsersArr();
           this.loading = false;
         },
         error => {
@@ -77,6 +78,10 @@ export class UserManageComponent extends Access implements OnInit {
     this.userService.getAll()
       .subscribe((usersFromService) => this.usersArr = usersFromService);
 
+  }
+
+  checkAuth(role: string, user: User) {
+    return AuthorizationGuard.hasAuthority(role, user)
   }
 
 }

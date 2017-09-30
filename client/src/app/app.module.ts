@@ -12,11 +12,11 @@ import {AuthorizationGuard} from "./guard/authorization.guard";
 import {UserService} from "./service/user.service";
 import {HomeComponent} from "./home/home.component";
 import {UserAddComponent} from "./user-add/user-add.component";
-import {RegistrationComponent} from "./registration/registration.component";
 import {UserManageComponent} from "./user-manage/user-manage.component";
 import {TaskAddComponent} from "./task-add/task-add.component";
 import {TaskService} from "./service/task.service";
 import {TaskManageComponent} from "./task-manage/task-manage.component";
+import {TaskMylistComponent} from "./task-mylist/task-mylist.component";
 
 @NgModule({
     imports: [BrowserModule, FormsModule,
@@ -24,8 +24,8 @@ import {TaskManageComponent} from "./task-manage/task-manage.component";
         ReactiveFormsModule, RouterModule],
     declarations: [
       AppComponent, LoginComponent, HomeComponent,
-      UserAddComponent, UserManageComponent, RegistrationComponent,
-      TaskAddComponent, TaskManageComponent
+      UserAddComponent, UserManageComponent,
+      TaskAddComponent, TaskManageComponent, TaskMylistComponent
     ],
     providers: [{
         provide: LocationStrategy,

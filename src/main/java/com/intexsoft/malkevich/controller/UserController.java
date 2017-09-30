@@ -10,18 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * RestController for {@link User}
+ * RestController for {@link User} entity
  */
 @RestController
 public class UserController {
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+	private final UserService userService;
 
 	@Autowired
-	private UserService userService;
+    UserController(UserService userService){
+	    this.userService = userService;
+    }
 
 	/**
-	 * Add new {@link User}
+	 * Add new user
 	 */
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	public ResponseEntity<?> registration(@RequestBody User user) {
@@ -29,7 +31,7 @@ public class UserController {
 		try {
 			return new ResponseEntity<>(userService.registration(user), HttpStatus.CREATED);
 		} catch (Exception e) {
-			LOGGER.info("Error while add new user. " + e.getLocalizedMessage());
+			LOGGER.error("Error while add new user. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -43,7 +45,7 @@ public class UserController {
 		try {
 			return new ResponseEntity<>(userService.setMananager(userId), HttpStatus.OK);
 		} catch (Exception e) {
-			LOGGER.info("Error while add MANAGER_ROLE " + e.getLocalizedMessage());
+			LOGGER.error("Error while add MANAGER_ROLE " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -56,23 +58,24 @@ public class UserController {
         try {
             return new ResponseEntity<>(userService.setAdmin(userId), HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.info("Error while add ADMIN_ROLE " + e.getLocalizedMessage());
+            LOGGER.error("Error while add ADMIN_ROLE " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    /**
+     * Get list of all users
+     */
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     public ResponseEntity<?> getAll() {
         LOGGER.info("Start get all users");
         try {
             return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.info("Error while get all users " + e.getLocalizedMessage());
+            LOGGER.error("Error while get all users " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-
 
     /**
      * Delete user, finded by id
@@ -84,11 +87,8 @@ public class UserController {
             userService.deleteById(userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.info("Error while delete user " + e.getLocalizedMessage());
+            LOGGER.error("Error while delete user " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
 }

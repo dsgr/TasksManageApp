@@ -1,41 +1,43 @@
-<nav class="navbar">
-    <div>
-        <div class="nav navbar-nav navbar-right top-nav">
-            <div style="margin-right: 5px">
-                <p *ngIf="isLoggedIn()" class="navbar-text">
-                  Приветствуем Вас, <b>{{welcomeName}}.</b>
-                  <span><a class="tour-head" (click)="logout()">Выход</a></span>
-                </p>
-            </div>
-        </div>
-        <div class="nav navbar-nav navbar-right top-nav" style="padding-top: 15px;">
-            <span *ngIf="!isLoggedIn()">
-                <a routerLink="/login" >Войти</a>
-                <a routerLink="/registration">Регистрация</a>
-            </span>
-        </div>
-        <div style="padding-top: 15px;">
-            <a routerLink="/home" routerLinkActive="active" class="btn btn-default">Домашняя <br>страница</a>
-            <span  *ngIf="hasManagerAuthority()">
-                <a routerLink="/task-add" routerLinkActive="active" class="btn btn-default">Добавить<br>заявку</a>
-            </span>
-          <span  *ngIf="hasManagerAuthority()">
-                <a routerLink="/task-manage" routerLinkActive="active" class="btn btn-default">Управление<br>заявками</a>
-            </span>
-            <span  *ngIf="hasAdminAuthority()">
-                <a routerLink="/user-add" routerLinkActive="active" class="btn btn-default">Добавить<br>пользователя</a>
-                <a routerLink="/user-manage" routerLinkActive="active" class="btn btn-default">Управление<br>пользователями</a>
-            </span>
-
-
-
-        </div>
-    </div>
-</nav>
 <div class="container">
-    <router-outlet></router-outlet>
+<nav class="navbar">
+  <div>
+    <div class="nav navbar-nav navbar-right top-nav">
+      <div style="margin-right: 5px">
+        <p *ngIf="isLoggedIn()" class="navbar-text">
+          Приветствуем Вас, <b>{{welcomeName}}.</b>
+          <span><a class="tour-head" (click)="logout()">Выход</a></span>
+        </p>
+      </div>
+    </div>
+    <div class="nav navbar-nav navbar-right top-nav" style="padding-top: 15px;">
+            <span *ngIf="!isLoggedIn()">
+                <a routerLink="/login">Войти</a>
+            </span>
+    </div>
+    <div style="padding-top: 15px;">
+      <a routerLink="/home" routerLinkActive="active" class="btn btn-default">Домашняя <br>страница</a>
+
+      <span *ngIf="hasManagerAuthority()">
+        <a routerLink="/task-add" routerLinkActive="active" class="btn btn-default">Добавить<br>заявку</a>
+        <a routerLink="/task-manage" routerLinkActive="active" class="btn btn-default">Управление<br>заявками</a>
+      </span>
+      <span *ngIf="hasAdminAuthority()">
+        <a routerLink="/user-add" routerLinkActive="active" class="btn btn-default">Добавить<br>пользователя</a>
+        <a routerLink="/user-manage" routerLinkActive="active" class="btn btn-default">Управление<br>пользователями</a>
+      </span>
+      <span *ngIf="hasAuthority()">
+        <a routerLink="/task-mylist" routerLinkActive="active" class="btn btn-default">Мои<br>заявки</a>
+      </span>
+
+    </div>
+  </div>
+
+</nav>
+<div>
+  <router-outlet></router-outlet>
 </div>
 
+</div>
 
 
 

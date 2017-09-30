@@ -1,14 +1,16 @@
 import { AppPage } from './app.po';
 
-describe('client App', () => {
+describe('Load app test', () => {
   let page: AppPage;
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display homepage', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getH2Text()).toEqual('TasksManageApp');
   });
+
+
 });

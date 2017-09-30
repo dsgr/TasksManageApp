@@ -1,16 +1,22 @@
 import {AuthorizationGuard} from "../guard/authorization.guard";
-export class Access{
 
-    public hasAuthority(): boolean {
-        return AuthorizationGuard.hasAuthority("ROLE_USER") || AuthorizationGuard.hasAuthority("ROLE_MANAGER")
-            || AuthorizationGuard.hasAuthority("ROLE_ADMIN");
-    }
+export class Access {
 
-    public hasAdminAuthority(): boolean {
-        return  AuthorizationGuard.hasAuthority("ROLE_ADMIN");
-    }
+  public hasAuthority(): boolean {
+    return AuthorizationGuard.hasAuthority("ROLE_USER",null)
+        || AuthorizationGuard.hasAuthority("ROLE_MANAGER", null)
+        || AuthorizationGuard.hasAuthority("ROLE_ADMIN", null);
+  }
 
-    public hasManagerAuthority(): boolean {
-        return AuthorizationGuard.hasAuthority("ROLE_MANAGER");
-    }
+  public hasAdminAuthority(): boolean {
+    return AuthorizationGuard.hasAuthority("ROLE_ADMIN", null);
+  }
+
+  public hasManagerAuthority(): boolean {
+    return AuthorizationGuard.hasAuthority("ROLE_MANAGER", null);
+  }
+
+  public hasUserAuthority(): boolean {
+    return AuthorizationGuard.hasAuthority("ROLE_USER", null);
+  }
 }

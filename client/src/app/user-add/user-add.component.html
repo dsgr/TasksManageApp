@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
       <label>Почта</label>
-      <input type="text" class="form-control input-lg" name="mail" formControlName="mail" required/>
+      <input type="email" class="form-control input-lg" name="mail" formControlName="mail" required/>
     </div>
     <div class="form-group">
       <label>Имя</label>
@@ -26,7 +26,7 @@
       <input type="text" class="form-control input-lg" name="phoneNumber" formControlName="phoneNumber" required/>
     </div>
     <div class="form-group">
-      <button id="login-button" type="submit" [disabled]="loading" class="btn btn-primary btn-lg btn-block">Добавить пользователя</button>
+      <button id="login-button" type="submit" [disabled]="userAddForm.invalid || loading" class="btn btn-primary btn-lg btn-block">Добавить пользователя</button>
       <img width="50px" class="img-responsive center-block" *ngIf="loading" src="/assets/loading2.gif" />
     </div>
     <div *ngIf="error" class="alert alert-danger">{{error}}</div>

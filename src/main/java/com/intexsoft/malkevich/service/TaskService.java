@@ -12,7 +12,7 @@ public interface TaskService {
 
 	List<Task> findAll();
 
-	Task findByUserId(Long userId);
+	List<Task> findByUserId(Long userId);
 
 	@Transactional
 	Task save(Task task);
@@ -22,6 +22,10 @@ public interface TaskService {
 	void deleteAll();
 	@Transactional
 	void deleteById(Long taskId);
+	@Transactional
+	Task changeUser(Long taskId, Long userId);
+	@Transactional
+	Task changeStatus(Long taskId, Long userId);
 	@Transactional
 	Task update(Task task);
 

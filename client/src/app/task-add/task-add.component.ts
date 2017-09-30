@@ -28,8 +28,8 @@ export class TaskAddComponent extends Access implements OnInit {
     this.taskAddForm = new FormGroup({
       name: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
-      userId: new FormControl('', Validators.required),
-      dateStart: new FormControl('', Validators.required)
+      userId: new FormControl(''),
+      dateStart: new FormControl('')
     });
   }
 
@@ -54,12 +54,16 @@ export class TaskAddComponent extends Access implements OnInit {
       );
   }
 
+
+
   updateUsersArr() {
     this.usersArr = [];
     this.userService.getAll()
       .subscribe((usersFromService) => this.usersArr = usersFromService);
 
   }
+
+
 
 
 }

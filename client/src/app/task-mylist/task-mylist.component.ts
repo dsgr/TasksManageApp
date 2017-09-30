@@ -10,58 +10,22 @@ import {TaskStatus} from "../model/taskStatus";
 
 
 @Component({
-  selector: 'task-manage-component',
-  templateUrl: './task-manage.component.html',
-  styleUrls: ['./task-manage.component.css']
+  selector: 'task-mylist-component',
+  templateUrl: './task-mylist.component.html',
+  styleUrls: ['./task-mylist.component.css']
 })
-export class TaskManageComponent extends Access implements OnInit {
+export class TaskMylistComponent extends Access implements OnInit {
   loading: boolean = false;
   error: string = '';
   tasksArr: Task[] = [];
   taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
-  usersArr: User[] = [];
-
 
   constructor(private router: Router, private userService: UserService, private taskService: TaskService) {
     super();
   }
 
   ngOnInit(): void {
-    this.updateUsersArr();
     this.updateTasksArr();
-  }
-
-  onDelete(taskId) {
-    this.loading = true;
-    this.error = '';
-    this.taskService.delete(taskId)
-      .subscribe(
-        result => {
-          this.updateTasksArr();
-          this.loading = false;
-        },
-        error => {
-          this.error = <any>error;
-          this.loading = false;
-        }
-      );
-
-  }
-
-  onUserChange(taskId, userId){
-    this.loading = true;
-    this.error = '';
-    this.taskService.changeUser(taskId,userId)
-      .subscribe(
-        result => {
-          this.updateTasksArr();
-          this.loading = false;
-        },
-        error => {
-          this.error = <any>error;
-          this.loading = false;
-        }
-      );
   }
 
   onStatusChange(taskId, statusId){
@@ -80,20 +44,9 @@ export class TaskManageComponent extends Access implements OnInit {
       );
   }
 
-
-
-
   updateTasksArr() {
     this.tasksArr = [];
-    this.taskService.getAll()
+    this.taskService.getMylist()
       .subscribe((tasksFromService) => this.tasksArr = tasksFromService);
   }
-
-  updateUsersArr() {
-    this.userService.getAll()
-      .subscribe((usersFromService) => this.usersArr = usersFromService);
-  }
-
-
-
 }
