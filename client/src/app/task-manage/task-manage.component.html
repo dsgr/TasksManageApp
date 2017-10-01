@@ -38,6 +38,10 @@
         </select>
       </th>
       <th>
+        <button (click)="selectedTask = task" id="detail-button" type="submit" [disabled]="loading" class="btn btn-primary"
+                title="Показать детали">
+          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        </button>
         <button (click)="onDelete(task.id)" id="delete-button" type="submit" [disabled]="loading" class="btn btn-danger"
                 title="Удалить">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -49,9 +53,10 @@
     </tbody>
   </table>
 
-
   <img *ngIf="loading || !tasksArr.length " width="50px" class="img-responsive center-block"
        src="/assets/loading2.gif"/>
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
 </div>
+
+<task-detail-component *ngIf="selectedTask" [currentTask]="selectedTask"> </task-detail-component>

@@ -15,12 +15,16 @@ import java.util.List;
 @Service
 public class TaskServiceImpl implements TaskService {
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskController.class);
-    @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    public TaskServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Override
     public List<Task> findAll() {
-        return taskRepository.findAll();
+        return taskRepository.findAllByOrderById();
     }
 
     @Override
@@ -30,7 +34,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(Task task) {
-        return null;
+        LOGGER.debug("saving task" + task.toString());
+        return taskRepository.saveAndFlush(task);
     }
 
     @Override
@@ -53,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task changeUser(Long taskId, Long userId) {
         Task task = taskRepository.findById(taskId);
-        task.userId=userId;
+        task.userId = userId;
         taskRepository.saveAndFlush(task);
         return task;
     }
@@ -61,7 +66,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task changeStatus(Long taskId, Long statusId) {
         Task task = taskRepository.findById(taskId);
-        task.taskStatusId=statusId;
+        task.taskStatusId = statusId;
         taskRepository.saveAndFlush(task);
         return task;
     }

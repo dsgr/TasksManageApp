@@ -20,6 +20,7 @@ export class TaskManageComponent extends Access implements OnInit {
   tasksArr: Task[] = [];
   taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
   usersArr: User[] = [];
+  selectedTask: Task;
 
 
   constructor(private router: Router, private userService: UserService, private taskService: TaskService) {

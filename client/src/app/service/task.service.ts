@@ -23,6 +23,28 @@ export class TaskService {
     });
   }
 
+  save (task: Task) {
+    const myHeaders = new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': LoginService.getCurrentUser().token
+    });
+    const options = new RequestOptions({headers: myHeaders});
+    return this.http.post('api/task/save', task, options)
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while saving task! code status: ' + response.status);
+        } else {
+          return response.json();
+        }
+      })
+
+
+
+
+
+  }
+
+
   getAll() {
     console.log("getall tasks started");
     const myHeaders = new Headers({

@@ -15,7 +15,7 @@ import java.util.Map;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-	private String secretKey = "snikers";
+	private String secretKey = "snake";
 
 	@Override
 	public String generate(User user, String password) {

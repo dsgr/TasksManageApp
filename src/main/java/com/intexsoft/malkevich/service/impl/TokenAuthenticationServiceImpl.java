@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class TokenAuthenticationServiceImpl implements TokenAuthenticationService {
 
-	private String secretKey = "snikers";
+	private String secretKey = "snake";
 
 	private final static String AUTH_HEADER_NAME = "x-auth-token";
 

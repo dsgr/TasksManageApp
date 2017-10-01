@@ -1,5 +1,6 @@
 package com.intexsoft.malkevich.repository;
 
+import com.intexsoft.malkevich.model.Comment;
 import com.intexsoft.malkevich.model.Task;
 import com.intexsoft.malkevich.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,11 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 /**
- * Repository for {@link User}
+ * Repository for {@link Comment}
  */
-public interface TaskRepository extends JpaRepository<Task, Long> {
-	List<Task> findAllByOrderById();
-	List<Task> findAllByUserId(Long id);
-	Task findById(Long id);
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+	List<Comment> findAllByTaskId(Long id);
+	Comment findById(Long id);
 }
