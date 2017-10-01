@@ -35,10 +35,7 @@ public class AuthenticationController {
     }
 
     /**
-     * Search user in database by username
-     * Generate token
-     *
-     * @return {@link TokenDTO} model
+     * Search user in database and generate token
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> authenticate(@RequestBody User requestUser) {

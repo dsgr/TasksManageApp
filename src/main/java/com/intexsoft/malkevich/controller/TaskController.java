@@ -41,7 +41,21 @@ public class TaskController {
     }
 
     /**
-     * Return list of all tasks
+     * Save {@link Task}
+     */
+    @RequestMapping(value = "/task/save", method = RequestMethod.POST)
+    public ResponseEntity<?> save(@RequestBody Task task) {
+        LOGGER.info("Start save task");
+        try {
+            return new ResponseEntity<>(taskService.save(task), HttpStatus.OK);
+        } catch (Exception e) {
+            LOGGER.info("Error while saving task. " + e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Return list of all {@link Task}
      */
     @RequestMapping(value = "/task/all", method = RequestMethod.GET)
     public ResponseEntity<?> getAll() {

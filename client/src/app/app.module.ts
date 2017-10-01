@@ -17,6 +17,8 @@ import {TaskAddComponent} from "./task-add/task-add.component";
 import {TaskService} from "./service/task.service";
 import {TaskManageComponent} from "./task-manage/task-manage.component";
 import {TaskMylistComponent} from "./task-mylist/task-mylist.component";
+import {TaskDetailComponent} from "./task-detail/task-detail.component";
+import {CommentService} from "./service/comment.service";
 
 @NgModule({
     imports: [BrowserModule, FormsModule,
@@ -25,12 +27,13 @@ import {TaskMylistComponent} from "./task-mylist/task-mylist.component";
     declarations: [
       AppComponent, LoginComponent, HomeComponent,
       UserAddComponent, UserManageComponent,
-      TaskAddComponent, TaskManageComponent, TaskMylistComponent
+      TaskAddComponent, TaskManageComponent,
+      TaskMylistComponent, TaskDetailComponent
     ],
     providers: [{
         provide: LocationStrategy,
         useClass: HashLocationStrategy
-    }, LoginService, AuthorizationGuard, UserService, TaskService],
+    }, LoginService, AuthorizationGuard, UserService, TaskService, CommentService],
     bootstrap: [AppComponent]
 })
 export class AppModule {
