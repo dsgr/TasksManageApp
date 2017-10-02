@@ -19,6 +19,7 @@ export class TaskMylistComponent extends Access implements OnInit {
   error: string = '';
   tasksArr: Task[] = [];
   taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
+  selectedTask: Task;
 
   constructor(private router: Router, private userService: UserService, private taskService: TaskService) {
     super();
@@ -28,7 +29,7 @@ export class TaskMylistComponent extends Access implements OnInit {
     this.updateTasksArr();
   }
 
-  onStatusChange(taskId, statusId){
+  onStatusChange(taskId, statusId) {
     this.loading = true;
     this.error = '';
     this.taskService.changeStatus(taskId, statusId)
@@ -42,6 +43,12 @@ export class TaskMylistComponent extends Access implements OnInit {
           this.loading = false;
         }
       );
+  }
+
+  onDetailClick(task: Task) {
+    this.selectedTask = null;
+    console.log(task);
+    this.selectedTask = task;
   }
 
   updateTasksArr() {

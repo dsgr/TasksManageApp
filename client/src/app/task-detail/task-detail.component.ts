@@ -10,6 +10,7 @@ import {TaskStatus} from "../model/taskStatus";
 import {Comment} from "../model/comment";
 import {CommentService} from "../service/comment.service";
 import {LoginService} from "../auth/login.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 
 @Component({
@@ -33,18 +34,23 @@ export class TaskDetailComponent extends Access implements OnChanges {
     this.updateUsersArr();
   }
 
+  /**
+   * Method invokes when model changes
+   */
   ngOnChanges(): void {
     console.log("task-detail ngOnChanges")
     this.updateCommentsArr();
     this.taskDetailForm = new FormGroup({
       name: new FormControl(this.currentTask.name, Validators.required),
       description: new FormControl(this.currentTask.description, Validators.required),
-      userId: new FormControl(''),
+      userId: new FormControl(this.currentTask.userId),
       dateStart: new FormControl(this.currentTask.dateStart)
     });
   }
 
-
+  /**
+   * Save edited task
+   */
   onSubmit() {
     this.loading = true;
     this.currentTask.name = this.taskDetailForm.value.name;
@@ -64,7 +70,10 @@ export class TaskDetailComponent extends Access implements OnChanges {
       );
   }
 
-  addComment(){
+  /**
+   * Adds new comment for task
+   */
+  addComment() {
     console.log(this.newComment);
     const comment = new Comment();
     comment.message = this.newComment;
@@ -74,7 +83,7 @@ export class TaskDetailComponent extends Access implements OnChanges {
     this.commentService.add(comment)
       .subscribe(
         result => {
-          this.newComment="";
+          this.newComment = "";
           this.updateCommentsArr();
         },
         error => {
@@ -84,6 +93,9 @@ export class TaskDetailComponent extends Access implements OnChanges {
       );
   }
 
+  /**
+   * Change task`s user
+   */
   onUserChange(taskId, userId) {
     this.loading = true;
     this.error = '';
@@ -99,6 +111,9 @@ export class TaskDetailComponent extends Access implements OnChanges {
       );
   }
 
+  /**
+   * Changes task`s status
+   */
   onStatusChange(taskId, statusId) {
     this.loading = true;
     this.error = '';
@@ -114,15 +129,29 @@ export class TaskDetailComponent extends Access implements OnChanges {
       );
   }
 
+  /**
+   * Updates users array from server
+   */
   updateUsersArr() {
     this.userService.getAll()
       .subscribe((usersFromService) => this.usersArr = usersFromService);
   }
 
+  /**
+   * Updates comments array for current task
+   */
   updateCommentsArr() {
     this.commentService.getAllByTaskId(this.currentTask.id)
-      .subscribe((commentsFromService) => this.commentsArr = commentsFromService);
+      .subscribe((commentsFromService) => {
+      this.commentsArr = commentsFromService;
+      for(let index=0;index < this.commentsArr.length; index++){
+        for(let uIndex=0; uIndex < this.usersArr.length; uIndex++){
+          if(this.commentsArr[index].userId == this.usersArr[uIndex].id){
+            this.commentsArr[index].username = this.usersArr[uIndex].username;
+          }
+        }
+      }
+    });
   }
-
 
 }

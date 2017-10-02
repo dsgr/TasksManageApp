@@ -27,17 +27,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/user/all").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
-				.antMatchers(HttpMethod.GET, "/api/user/add").hasAnyAuthority("ROLE_ADMIN")
+				.antMatchers(HttpMethod.POST, "/api/user/add").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/user/delete").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/user/setadmin").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/user/setmanager").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/task/all").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
-				.antMatchers(HttpMethod.GET, "/api/task/add").hasAnyAuthority("ROLE_ADMIN")
+				.antMatchers(HttpMethod.POST, "/api/task/add").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/task/delete").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/task/setuser").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/task/setstatus").hasAnyAuthority("ROLE_ADMIN")
-				.antMatchers(HttpMethod.POST, "/api/customer4/all").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER")
-                .antMatchers(HttpMethod.PUT, "/puttest").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER", "ROLE_USER")
+				.antMatchers(HttpMethod.GET, "/api/comment/getallfortask/*").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER","ROLE_USER")
+				.antMatchers(HttpMethod.POST, "/api/comment/add/").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER","ROLE_USER")
 				.and().addFilterBefore(new AuthenticationTokenFilter(tokenAuthenticationService),
 						UsernamePasswordAuthenticationFilter.class)
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();

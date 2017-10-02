@@ -2,16 +2,16 @@
 <nav class="navbar">
   <div>
     <div class="nav navbar-nav navbar-right top-nav">
-      <div style="margin-right: 5px">
+      <div>
         <p *ngIf="isLoggedIn()" class="navbar-text">
           Приветствуем Вас, <b>{{welcomeName}}.</b>
-          <span><a class="tour-head" (click)="logout()">Выход</a></span>
+          <span><a (click)="logout()" class="btn btn-default">Выход</a></span>
         </p>
       </div>
     </div>
     <div class="nav navbar-nav navbar-right top-nav" style="padding-top: 15px;">
             <span *ngIf="!isLoggedIn()">
-                <a routerLink="/login">Войти</a>
+                <a routerLink="/login" class="btn btn-default">Войти</a>
             </span>
     </div>
     <div style="padding-top: 15px;">

@@ -5,5 +5,5 @@ export class Comment {
   date: Date;
   userId: number;
   taskId: number;
-
+  username: string;
 }
