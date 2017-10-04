@@ -38,7 +38,6 @@ public class TaskServiceImplTest {
         task.taskStatusId = 2L;
         when(taskRepository.saveAndFlush(task)).thenReturn(task);
         when(taskRepository.findById(1L)).thenReturn(task);
-
         assertEquals(33L, taskService.changeUser(1L,33L).userId.longValue());
     }
     @Test
@@ -48,7 +47,6 @@ public class TaskServiceImplTest {
         task.taskStatusId = 2L;
         when(taskRepository.saveAndFlush(task)).thenReturn(task);
         when(taskRepository.findById(1L)).thenReturn(task);
-
         assertEquals(55L, taskService.changeStatus(1L,55L).taskStatusId.longValue());
     }
 

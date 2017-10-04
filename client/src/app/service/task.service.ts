@@ -6,24 +6,34 @@ import {Task} from "../model/task";
 import {TaskStatus} from "../model/taskStatus";
 import {environment} from "../constants/environment";
 
-
 @Injectable()
 export class TaskService {
-
-  private taskAddUrl: string = 'api/task/add';
 
   constructor(private http: Http) {
   }
 
-
+  /**
+   * Add new task
+   */
   add(task: Task) {
-    const body = task;
-    return this.http.post(this.taskAddUrl, body).map(() => {
-      return true;
+    const myHeaders = new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': LoginService.getCurrentUser().token
     });
+    const options = new RequestOptions({headers: myHeaders});
+    return this.http.post('api/task/add', task, options)
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while add task! code status: ' + response.status);
+        }
+        return response.json();
+      });
   }
 
-  save (task: Task) {
+  /**
+   * Save task
+   */
+  save(task: Task) {
     const myHeaders = new Headers({
       'Content-Type': 'application/json',
       'x-auth-token': LoginService.getCurrentUser().token
@@ -33,18 +43,14 @@ export class TaskService {
       .map((response: Response) => {
         if (response.status != 200) {
           throw new Error('Error while saving task! code status: ' + response.status);
-        } else {
-          return response.json();
         }
+        return response.json();
       })
-
-
-
-
-
   }
 
-
+  /**
+   * Get all tasks
+   */
   getAll() {
     console.log("getall tasks started");
     const myHeaders = new Headers({
@@ -62,6 +68,9 @@ export class TaskService {
       })
   }
 
+  /**
+   * Get all task assigned to current user
+   */
   getMylist() {
     console.log("getall tasks started");
     const currentUser = localStorage.getItem(environment.USER_KEY)
@@ -74,13 +83,14 @@ export class TaskService {
       .map((response: Response) => {
         if (response.status != 200) {
           throw new Error('Error while loading all tasks! code status: ' + response.status);
-        } else {
-          return response.json();
         }
+        return response.json();
       })
   }
 
-
+  /**
+   * Delete task by id
+   */
   delete(taskId) {
     let url = "api/task/delete/" + taskId;
     const myHeaders = new Headers({
@@ -89,32 +99,55 @@ export class TaskService {
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.get(url, options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while delete task! code status: ' + response.status);
+        }
+        return true;
+      })
   }
 
-
-  changeUser(taskId, userId){
-    let url = "api/task/changeuser/" + taskId +'/'+ userId ;
+  /**
+   * Change user for task
+   */
+  changeUser(taskId, userId) {
+    let url = "api/task/changeuser/" + taskId + '/' + userId;
     const myHeaders = new Headers({
       'Content-Type': 'application/json',
       'x-auth-token': LoginService.getCurrentUser().token
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.get(url, options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while change user for task! code status: ' + response.status);
+        }
+        return response.json();
+      })
   }
 
-  changeStatus(taskId, statusId){
-    let url = "api/task/changestatus/" + taskId +'/'+ statusId ;
+  /**
+   * Change status for task
+   */
+  changeStatus(taskId, statusId) {
+    let url = "api/task/changestatus/" + taskId + '/' + statusId;
     const myHeaders = new Headers({
       'Content-Type': 'application/json',
       'x-auth-token': LoginService.getCurrentUser().token
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.get(url, options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while change status for task! code status: ' + response.status);
+        }
+        return response.json();
+      })
   }
 
+  /**
+   * Return task statuses
+   */
   getTaskStatusesArr() {
     let taskStastusesArr: TaskStatus[] = [
       {"id": 1, "name": "Зарегистрирована"},

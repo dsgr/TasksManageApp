@@ -1,46 +1,43 @@
 <div class="col-md-10 col-md-offset-1">
-  <h3 class="text-center">Мои заявки</h3>
-
+  <h3 class="text-center">Мои задачи</h3>
   <table class="table table-striped table-hover ">
     <thead>
     <tr>
       <th>id</th>
-      <th>username</th>
-      <th>description</th>
-      <th>dateStart</th>
+      <th>Логин</th>
+      <th>Описание</th>
+      <th>Дата</th>
       <th>Статус</th>
-      <th>actions</th>
+      <th>Действия</th>
     </tr>
     </thead>
     <tbody>
-
     <tr *ngFor="let task of tasksArr">
       <th>{{task.id}}</th>
       <th>{{task.name}}</th>
       <th>{{task.description}}</th>
       <th>{{task.dateStart | date: 'dd.MM.yyyy HH:mm'}}</th>
       <th>
-        <select (change)="onStatusChange(task.id, statusId.selectedOptions[0].value)" class="form-control" name="userId" #statusId>
-          <option *ngFor="let status of taskStatusesArr" [selected]="status.id == task.taskStatusId" value="{{status.id}}">
+        <select (change)="onStatusChange(task.id, statusId.selectedOptions[0].value)" class="form-control" name="userId"
+                #statusId>
+          <option *ngFor="let status of taskStatusesArr" [selected]="status.id == task.taskStatusId"
+                  value="{{status.id}}">
             {{status.name}}
           </option>
         </select>
       </th>
       <th>
-        <button (click)="onDelete(task.id)" id="delete-button" type="submit" [disabled]="loading" class="btn btn-danger"
-                title="Удалить">
-          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <button (click)="onDetailClick(task)" id="detail-button" type="submit" [disabled]="loading"
+                class="btn btn-primary"
+                title="Показать детали">
+          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
         </button>
       </th>
-
     </tr>
-
     </tbody>
   </table>
-
-
-  <img *ngIf="loading || !tasksArr.length " width="50px" class="img-responsive center-block"
+  <img *ngIf="loading" width="50px" class="img-responsive center-block"
        src="/assets/loading2.gif"/>
-  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-
+  <div *ngIf="error" class="alert alert-danger"><b>{{errorCommonMessage}}</b><br>{{error}}</div>
 </div>
+<task-detail-component *ngIf="selectedTask" [currentTask]="selectedTask"></task-detail-component>

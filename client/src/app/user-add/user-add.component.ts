@@ -4,6 +4,7 @@ import {User} from "../model/user";
 import {Router} from "@angular/router";
 import {Access} from "../constants/access";
 import {UserService} from "../service/user.service";
+import {environment} from "../constants/environment";
 
 
 @Component({
@@ -14,8 +15,8 @@ import {UserService} from "../service/user.service";
 export class UserAddComponent extends Access implements OnInit {
   userAddForm: FormGroup;
   loading: boolean = false;
+  errorCommonMessage: String = environment.ERROR_COMMON_MESSAGR;
   error: string = '';
-
 
   constructor(private router: Router, private userService: UserService) {
     super();

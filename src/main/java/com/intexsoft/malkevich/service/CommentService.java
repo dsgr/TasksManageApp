@@ -10,9 +10,15 @@ import java.util.List;
  * Service for {@link com.intexsoft.malkevich.model.Comment}
  */
 public interface CommentService {
-
+	/**
+	 * Find all tasks, assign to user
+	 */
 	@Transactional
 	List<Comment> findByTaskId(Long userId);
+
+	/**
+	 * Add new comment
+	 */
 	@Transactional
 	Comment add(Comment comment);
 }

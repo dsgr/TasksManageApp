@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {Access} from "../constants/access";
 import {UserService} from "../service/user.service";
 import {AuthorizationGuard} from "../guard/authorization.guard";
+import {environment} from "../constants/environment";
 
 @Component({
   selector: 'user-manage-component',
@@ -13,6 +14,7 @@ import {AuthorizationGuard} from "../guard/authorization.guard";
 })
 export class UserManageComponent extends Access implements OnInit {
   loading: boolean = false;
+  errorCommonMessage: String = environment.ERROR_COMMON_MESSAGR;
   error: string = '';
   usersArr: User[] = [];
 

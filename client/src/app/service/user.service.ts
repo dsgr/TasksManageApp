@@ -3,7 +3,6 @@ import {Http, RequestOptions, Headers, Response} from "@angular/http";
 import {User} from '../model/user';
 import {LoginService} from "../auth/login.service";
 
-
 @Injectable()
 export class UserService {
 
@@ -12,8 +11,10 @@ export class UserService {
   constructor(private http: Http) {
   }
 
+  /**
+   * Get all users
+   */
   getAll() {
-    console.log("getall started");
     const myHeaders = new Headers({
       'Content-Type': 'application/json',
       'x-auth-token': LoginService.getCurrentUser().token
@@ -23,20 +24,32 @@ export class UserService {
       .map((response: Response) => {
         if (response.status != 200) {
           throw new Error('Error while loading all users! code status: ' + response.status);
-        } else {
-          return response.json();
         }
-      })
+        return response.json();
+      });
   }
 
-
+  /**
+   * Add new user
+   */
   add(user: User) {
-    const body = user;
-    return this.http.post(this.usersAddUrl, body).map(() => {
-      return true;
+    const myHeaders = new Headers({
+      'Content-Type': 'application/json',
+      'x-auth-token': LoginService.getCurrentUser().token
     });
+    const options = new RequestOptions({headers: myHeaders});
+    return this.http.post("api/user/add", user, options)
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while add new user! code status: ' + response.status);
+        }
+        return response.json();
+      });
   }
 
+  /**
+   * Add manager role to user
+   */
   setManager(userId) {
     let url = "api/user/setmanager/" + userId;
     const myHeaders = new Headers({
@@ -45,9 +58,17 @@ export class UserService {
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.put(url, "", options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while add manager role! code status: ' + response.status);
+        }
+        return response.json();
+      })
   }
 
+  /**
+   * Add admin role to user
+   */
   setAdmin(userId) {
     let url = "api/user/setadmin/" + userId;
     const myHeaders = new Headers({
@@ -56,9 +77,17 @@ export class UserService {
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.put(url, "", options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while loading all users! code status: ' + response.status);
+        }
+        return response.json();
+      })
   }
 
+  /**
+   * Delete user by id
+   */
   delete(userId) {
     let url = "api/user/delete/" + userId;
     const myHeaders = new Headers({
@@ -67,13 +96,12 @@ export class UserService {
     });
     const options = new RequestOptions({headers: myHeaders});
     return this.http.get(url, options)
-      .map((response: Response) => response.status === 200);
+      .map((response: Response) => {
+        if (response.status != 200) {
+          throw new Error('Error while delete user! code status: ' + response.status);
+        }
+        return true;
+      })
   }
-
-
-
-
-
-
 
 }

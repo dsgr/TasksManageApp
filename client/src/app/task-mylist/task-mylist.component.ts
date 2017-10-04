@@ -1,13 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {User} from "../model/user";
 import {Task} from "../model/task";
-import {Router} from "@angular/router";
 import {Access} from "../constants/access";
-import {UserService} from "../service/user.service";
 import {TaskService} from "../service/task.service";
 import {TaskStatus} from "../model/taskStatus";
-
+import {environment} from "../constants/environment";
 
 @Component({
   selector: 'task-mylist-component',
@@ -16,19 +12,27 @@ import {TaskStatus} from "../model/taskStatus";
 })
 export class TaskMylistComponent extends Access implements OnInit {
   loading: boolean = false;
+  errorCommonMessage: String = environment.ERROR_COMMON_MESSAGR;
   error: string = '';
   tasksArr: Task[] = [];
   taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
+  selectedTask: Task;
 
-  constructor(private router: Router, private userService: UserService, private taskService: TaskService) {
+  constructor(private taskService: TaskService) {
     super();
   }
 
+  /**
+   * Init method. Invokes when component creates
+   */
   ngOnInit(): void {
     this.updateTasksArr();
   }
 
-  onStatusChange(taskId, statusId){
+  /**
+   * Change status for task
+   */
+  onStatusChange(taskId, statusId) {
     this.loading = true;
     this.error = '';
     this.taskService.changeStatus(taskId, statusId)
@@ -44,9 +48,28 @@ export class TaskMylistComponent extends Access implements OnInit {
       );
   }
 
+  /**
+   * Set selected task. Next it used by detail component.
+   */
+  onDetailClick(task: Task) {
+    this.selectedTask = null;
+    this.selectedTask = task;
+  }
+
+  /**
+   * Load tasksk from service to component
+   */
   updateTasksArr() {
+    this.loading = true;
     this.tasksArr = [];
     this.taskService.getMylist()
-      .subscribe((tasksFromService) => this.tasksArr = tasksFromService);
+      .subscribe((tasksFromService) => {
+          this.tasksArr = tasksFromService;
+          this.loading = false;
+        }, error => {
+          this.error = <any>error;
+          this.loading = false;
+        }
+      );
   }
 }

@@ -29,6 +29,6 @@
       <button id="login-button" type="submit" [disabled]="userAddForm.invalid || loading" class="btn btn-primary btn-lg btn-block">Добавить пользователя</button>
       <img width="50px" class="img-responsive center-block" *ngIf="loading" src="/assets/loading2.gif" />
     </div>
-    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+    <div *ngIf="error" class="alert alert-danger"><b>{{errorCommonMessage}}</b><br>{{error}}</div>
   </form>
 </div>
