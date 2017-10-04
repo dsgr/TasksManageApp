@@ -1,0 +1,60 @@
+<div class="col-md-10 col-md-offset-1">
+  <div class="row">
+    <div class="col-md-8">
+      <h3>Задача {{currentTask.id}}</h3>
+      <form name="taskDetailForm" novalidate [formGroup]="taskDetailForm" (ngSubmit)="onSubmit()"
+            class="form-horizontal">
+        <div class="form-group">
+          <label>Название задачи</label>
+          <input type="text" class="form-control input-lg" name="name" formControlName="name" required/>
+        </div>
+        <div class="form-group">
+          <label>Описание задачи</label>
+          <textarea class="form-control input-lg" rows="3" name="description" formControlName="description"
+                    required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Исполнитель</label>
+          <select class="form-control input-lg" formControlName="userId" [(ngModel)]="currentTask.userId">
+            <option [selected]="currentTask.userId==null" value="0">
+              НЕ НАЗНАЧЕН
+            </option>
+            <option *ngFor="let user of usersArr" [selected]="user.id == currentTask.userId" value="{{user.id}}">
+              {{user.lastName +" "+ user.firstName}}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Дата начала</label>
+          <input type="datetime-local" class="form-control input-lg" name="dateStart" formControlName="dateStart"/>
+        </div>
+        <div class="form-group">
+          <button id="login-button" type="submit" [disabled]="taskDetailForm.invalid || loading"
+                  class="btn btn-primary btn-lg btn-block">Изменить заявку
+          </button>
+        </div>
+      </form>
+
+    </div>
+    <div class="col-md-4">
+      <h3>Комментарии:</h3>
+      <div *ngFor="let comment of commentsArr" class="alert alert-info">
+        {{comment.username}} - {{comment.date}}<br>
+        {{comment.message}}
+      </div>
+      <h3>Добавить новый</h3>
+      <div class="form-group">
+        <textarea class="form-control input-lg" rows="2" [(ngModel)]="newComment"></textarea>
+      </div>
+      <button id="add-comment-button" [disabled]="!newComment.length || loading" (click)="addComment()"
+              class="btn btn-primary btn-lg btn-block">Дабавить комментарий
+      </button>
+
+    </div>
+  </div>
+
+  <img *ngIf="loading" width="50px" class="img-responsive center-block"
+       src="/assets/loading2.gif"/>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+</div>

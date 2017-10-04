@@ -1,0 +1,34 @@
+<div class="col-md-6 col-md-offset-3">
+  <h3 class="text-center">Добавление пользователя</h3>
+  <form name="form3" novalidate [formGroup]="userAddForm" (ngSubmit)="onSubmit()"  class="form-horizontal">
+    <div class="form-group">
+      <label>Лигин</label>
+      <input type="text" class="form-control input-lg" name="username" formControlName="username" required/>
+    </div>
+    <div class="form-group">
+      <label>Пороль</label>
+      <input type="password" class="form-control input-lg" name="password" formControlName="password" required/>
+    </div>
+    <div class="form-group">
+      <label>Почта</label>
+      <input type="email" class="form-control input-lg" name="mail" formControlName="mail" required/>
+    </div>
+    <div class="form-group">
+      <label>Имя</label>
+      <input type="text" class="form-control input-lg" name="firstName" formControlName="firstName" required/>
+    </div>
+    <div class="form-group">
+      <label>Фамилия</label>
+      <input type="text" class="form-control input-lg" name="lastName" formControlName="lastName" required/>
+    </div>
+    <div class="form-group">
+      <label>Телефон</label>
+      <input type="text" class="form-control input-lg" name="phoneNumber" formControlName="phoneNumber" required/>
+    </div>
+    <div class="form-group">
+      <button id="login-button" type="submit" [disabled]="userAddForm.invalid || loading" class="btn btn-primary btn-lg btn-block">Добавить пользователя</button>
+      <img width="50px" class="img-responsive center-block" *ngIf="loading" src="/assets/loading2.gif" />
+    </div>
+    <div *ngIf="error" class="alert alert-danger"><b>{{errorCommonMessage}}</b><br>{{error}}</div>
+  </form>
+</div>
