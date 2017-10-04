@@ -1,20 +1,18 @@
 <div class="col-md-10 col-md-offset-1">
-  <h3 class="text-center">Управление заявками</h3>
-
+  <h3 class="text-center">Управление задачами</h3>
   <table class="table table-striped table-hover ">
     <thead>
     <tr>
       <th>id</th>
-      <th>username</th>
-      <th>description</th>
-      <th>dateStart</th>
+      <th>Логин</th>
+      <th>Описание</th>
+      <th>Дата</th>
       <th>Исполнитель</th>
       <th>Статус</th>
-      <th>actions</th>
+      <th>Действия</th>
     </tr>
     </thead>
     <tbody>
-
     <tr *ngFor="let task of tasksArr">
       <th>{{task.id}}</th>
       <th>{{task.name}}</th>
@@ -47,14 +45,10 @@
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
       </th>
-
     </tr>
-
     </tbody>
   </table>
-
-  <img *ngIf="loading || !tasksArr.length " width="50px" class="img-responsive center-block"
-       src="/assets/loading2.gif"/>
+  <img *ngIf="loading" width="50px" class="img-responsive center-block" src="/assets/loading2.gif"/>
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
 </div>

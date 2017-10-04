@@ -29,7 +29,7 @@ public class UserController {
 	public ResponseEntity<?> registration(@RequestBody User user) {
 		LOGGER.info("Start add new user");
 		try {
-			return new ResponseEntity<>(userService.registration(user), HttpStatus.CREATED);
+			return new ResponseEntity<>(userService.registration(user), HttpStatus.OK);
 		} catch (Exception e) {
 			LOGGER.error("Error while add new user. " + e.getLocalizedMessage());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

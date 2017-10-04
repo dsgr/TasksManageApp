@@ -33,7 +33,7 @@ public class TaskController {
     public ResponseEntity<?> add(@RequestBody Task task) {
         LOGGER.info("Start add new task");
         try {
-            return new ResponseEntity<>(taskService.add(task), HttpStatus.CREATED);
+            return new ResponseEntity<>(taskService.add(task), HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.info("Error while add new task. " + e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

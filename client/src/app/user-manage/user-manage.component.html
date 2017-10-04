@@ -5,12 +5,12 @@
     <thead>
     <tr>
       <th>id</th>
-      <th>username</th>
-      <th>first Name</th>
-      <th>last Name</th>
+      <th>Логин</th>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th>Почта</th>
       <th class="text-center">admin </th>
       <th class="text-center">manager</th>
-      <th class="text-center">user</th>
       <th class="text-right">actions</th>
     </tr>
     </thead>
@@ -21,9 +21,9 @@
       <th>{{user.username}}</th>
       <th>{{user.firstName}}</th>
       <th>{{user.lastName }}</th>
-      <th class="text-center"> <span *ngIf='checkAuth("ROLE_ADMIN", user)' class="glyphicon glyphicon-star" aria-hidden="true"></span> </th>
-      <th class="text-center"> <span *ngIf='checkAuth("ROLE_MANAGER", user)' class="glyphicon glyphicon-send" aria-hidden="true"></span> </th>
-      <th class="text-center"> <span *ngIf='checkAuth("ROLE_USER", user)' class="glyphicon glyphicon-user" aria-hidden="true"></span> </th>
+      <th>{{user.mail }}</th>
+      <th class="text-center"> <span *ngIf='checkAuth("ROLE_ADMIN", user)' class="glyphicon glyphicon-ok" aria-hidden="true"></span> </th>
+      <th class="text-center"> <span *ngIf='checkAuth("ROLE_MANAGER", user)' class="glyphicon glyphicon-ok" aria-hidden="true"></span> </th>
       <th class="text-right">
         <button (click)="onSetManager(user.id)" id="set-manager-button" type="submit" [disabled]='checkAuth("ROLE_MANAGER", user) || loading' class="btn btn-success" title="Сделать менеджером">
           <span class="glyphicon glyphicon-send" aria-hidden="true"></span>

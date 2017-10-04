@@ -18,8 +18,8 @@
       <a routerLink="/home" routerLinkActive="active" class="btn btn-default">Домашняя <br>страница</a>
 
       <span *ngIf="hasManagerAuthority()">
-        <a routerLink="/task-add" routerLinkActive="active" class="btn btn-default">Добавить<br>заявку</a>
-        <a routerLink="/task-manage" routerLinkActive="active" class="btn btn-default">Управление<br>заявками</a>
+        <a routerLink="/task-add" routerLinkActive="active" class="btn btn-default">Добавить<br>задачу</a>
+        <a routerLink="/task-manage" routerLinkActive="active" class="btn btn-default">Управление<br>задачами</a>
       </span>
       <span *ngIf="hasAdminAuthority()">
         <a routerLink="/user-add" routerLinkActive="active" class="btn btn-default">Добавить<br>пользователя</a>

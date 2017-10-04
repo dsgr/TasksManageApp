@@ -22,7 +22,6 @@ export class TaskDetailComponent extends Access implements OnChanges {
   @Input() currentTask: Task;
   loading: boolean = false;
   error: string = '';
-  taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
   usersArr: User[] = [];
   commentsArr: Comment[];
   taskDetailForm: FormGroup;
@@ -38,7 +37,6 @@ export class TaskDetailComponent extends Access implements OnChanges {
    * Method invokes when model changes
    */
   ngOnChanges(): void {
-    console.log("task-detail ngOnChanges")
     this.updateCommentsArr();
     this.taskDetailForm = new FormGroup({
       name: new FormControl(this.currentTask.name, Validators.required),
@@ -53,15 +51,15 @@ export class TaskDetailComponent extends Access implements OnChanges {
    */
   onSubmit() {
     this.loading = true;
+    this.error = '';
     this.currentTask.name = this.taskDetailForm.value.name;
     this.currentTask.description = this.taskDetailForm.value.description;
     this.currentTask.userId = this.taskDetailForm.value.userId;
     this.currentTask.dateStart = this.taskDetailForm.value.dateStart;
 
-    this.taskService.save(this.currentTask)
-      .subscribe(
+    this.taskService.save(this.currentTask).subscribe(
         result => {
-          result && this.router.navigate(['/task-manage']);
+          this.loading = false;
         },
         error => {
           this.error = <any>error;
@@ -74,7 +72,8 @@ export class TaskDetailComponent extends Access implements OnChanges {
    * Adds new comment for task
    */
   addComment() {
-    console.log(this.newComment);
+    this.loading = true;
+    this.error = '';
     const comment = new Comment();
     comment.message = this.newComment;
     comment.userId = LoginService.getCurrentUser().id;
@@ -85,6 +84,7 @@ export class TaskDetailComponent extends Access implements OnChanges {
         result => {
           this.newComment = "";
           this.updateCommentsArr();
+          this.loading = false;
         },
         error => {
           this.error = <any>error;

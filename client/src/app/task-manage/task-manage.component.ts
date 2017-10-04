@@ -7,6 +7,7 @@ import {Access} from "../constants/access";
 import {UserService} from "../service/user.service";
 import {TaskService} from "../service/task.service";
 import {TaskStatus} from "../model/taskStatus";
+import {environment} from "../constants/environment";
 
 
 @Component({
@@ -17,24 +18,31 @@ import {TaskStatus} from "../model/taskStatus";
 export class TaskManageComponent extends Access implements OnInit {
   loading: boolean = false;
   error: string = '';
+  errorCommonMessage: String = environment.ERROR_COMMON_MESSAGR;
   tasksArr: Task[] = [];
   taskStatusesArr: TaskStatus[] = this.taskService.getTaskStatusesArr();
   usersArr: User[] = [];
   selectedTask: Task;
 
-
   constructor(private router: Router, private userService: UserService, private taskService: TaskService) {
     super();
   }
 
+  /**
+   * Init method invokes when component creates
+   */
   ngOnInit(): void {
     this.updateUsersArr();
     this.updateTasksArr();
   }
 
+  /**
+   * Delete task id
+   */
   onDelete(taskId) {
     this.loading = true;
     this.error = '';
+    this.selectedTask = null;
     this.taskService.delete(taskId)
       .subscribe(
         result => {
@@ -49,10 +57,13 @@ export class TaskManageComponent extends Access implements OnInit {
 
   }
 
-  onUserChange(taskId, userId){
+  /**
+   * Change user for task
+   */
+  onUserChange(taskId, userId) {
     this.loading = true;
     this.error = '';
-    this.taskService.changeUser(taskId,userId)
+    this.taskService.changeUser(taskId, userId)
       .subscribe(
         result => {
           this.updateTasksArr();
@@ -65,7 +76,10 @@ export class TaskManageComponent extends Access implements OnInit {
       );
   }
 
-  onStatusChange(taskId, statusId){
+  /**
+   * Change status for task
+   */
+  onStatusChange(taskId, statusId) {
     this.loading = true;
     this.error = '';
     this.taskService.changeStatus(taskId, statusId)
@@ -82,19 +96,24 @@ export class TaskManageComponent extends Access implements OnInit {
   }
 
 
-
-
   updateTasksArr() {
+    this.loading = true;
     this.tasksArr = [];
     this.taskService.getAll()
-      .subscribe((tasksFromService) => this.tasksArr = tasksFromService);
+      .subscribe((tasksFromService) => {
+        this.tasksArr = tasksFromService;
+        this.loading = false;
+      });
   }
 
   updateUsersArr() {
+    this.loading = true;
     this.userService.getAll()
-      .subscribe((usersFromService) => this.usersArr = usersFromService);
+      .subscribe((usersFromService) => {
+        this.usersArr = usersFromService;
+        this.loading = false;
+      });
   }
-
 
 
 }
