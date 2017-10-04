@@ -15,7 +15,8 @@ repositories {
     mavenCentral()
 }
 
-war.dependsOn = ['client:buildClient']
+//war.dependsOn = ['client:buildClient']
+compileJava{dependsOn 'client:buildClient'}
 
 war {
     from 'client/dist'

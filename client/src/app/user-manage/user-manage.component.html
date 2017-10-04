@@ -40,9 +40,8 @@
     </tbody>
   </table>
 
-
   <img *ngIf="loading || !usersArr.length " width="50px" class="img-responsive center-block"
        src="/assets/loading2.gif"/>
-  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  <div *ngIf="error" class="alert alert-danger"><b>{{errorCommonMessage}}</b><br>{{error}}</div>
 
 </div>
