@@ -100,7 +100,7 @@ export class UserService {
         if (response.status != 200) {
           throw new Error('Error while delete user! code status: ' + response.status);
         }
-        return response.json();
+        return true;
       })
   }
 
